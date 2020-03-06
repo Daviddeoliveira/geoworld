@@ -21,7 +21,7 @@ function getCountriesByContinent($continent){
 }
 
 function getAllCountries(){
-  
+
   global $pdo;
   $query = 'SELECT * FROM Country;';
   return $pdo->query($query)->fetchAll();
@@ -31,14 +31,17 @@ function getContinents(){
 
   global $pdo;
   $query = 'SELECT Continent FROM Country GROUP BY Continent;';
-  return $pdo->query($query)->fetchAll(); 
+  return $pdo->query($query)->fetchAll();
 }
 
-function city(){
-   
+function getCitiesByIdCountry($idPays){
+
    global $pdo;
-   $query = 'SELECT NAME,population FROM city WHERE idcountry =';
-   return $pdo->query($query)->fetchAll();
+   $query = 'SELECT NAME,population FROM city WHERE idcountry= :idp';
+   $prep = $pdo->prepare($query);
+   $prep->bindValue(':idp', $idPays, PDO::PARAM_INT);
+   $prep->execute();
+   return $prep->fetchAll();
 }
 
 function languagesByCountry($idPays){
@@ -50,3 +53,41 @@ function languagesByCountry($idPays){
   $prep->execute();
   return $prep->fetchAll();
 }
+
+function getAuthentification($login,$pass){
+  global $pdo;
+  $query = "SELECT * FROM user where login=:login and password=:pass";
+  $prep = $pdo->prepare($query);
+  $prep->bindValue(':login', $login);
+  $prep->bindValue(':pass', $pass);
+  $prep->execute();
+  if($prep->rowCount() == 1){
+    $result = $prep->fetch();
+    return $result;
+ }
+  else
+  return false;
+}
+
+function ajouterUtilisateur($tab){
+   global $pdo;
+   print_r($tab);
+     $nom = $tab['nom'];
+     $login = $tab['login'];
+     $password = $tab['mot_de_passe'];
+     $role = $tab['role'];
+     $query = "INSERT INTO user(nom,role,login,password) values('$nom','$role','$login','$password')";
+     echo "$query";
+    $pdo->exec($query);
+}
+
+  function getNameCountyById($idPays){
+  global $pdo;
+  $query = 'SELECT Name FROM country WHERE id= :idp';
+  $prep = $pdo->prepare($query);
+  $prep->bindValue(':idp', $idPays, PDO::PARAM_INT);
+  $prep->execute();
+  return $prep->fetch();
+}
+/*$result =  $pdo->query($query)->fetch();
+return $result->name;*/

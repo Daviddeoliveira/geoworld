@@ -1,14 +1,25 @@
-<?php  
-require_once 'header.php'; 
+<?php
+require_once 'header.php';
 require_once 'inc/manager-db.php';
+require_once 'inc/connect-db.php';
+
+session_start ();
+if (isset($_SESSION['nom'])) {
+ echo "<p style=text-align:right;>Bienvenue : ".$_SESSION['nom']."";
+ echo '<br><a href="./logout.php">Deconnexion</a></p>';
+}
+else{
+ header ('location: authentification.php');
+}
+
 $continent = (empty($_GET['continent']))?'Asia' : $_GET['continent'];
 $desPays = getCountriesByContinent($continent);
 ?>
-         
+
 <main role="main" class="flex-shrink-0">
 
   <div class="container">
-    <?php echo "<h1>Les pays en $continent</h1>"?> 
+    <?php echo "<h1>Les pays en $continent</h1>"?>
     <div>
 
        <code>
@@ -27,25 +38,18 @@ $desPays = getCountriesByContinent($continent);
           </tr>
         <?php foreach ($desPays as $key) : ?>
           <tr>
-         <th><?php echo "$key->Name";?></th>
+         <th><a href=pays.php?id=<?php echo $key->id?>><?php echo "$key->Name";?></a></th>
          <th><?php echo "$key->Population"; ?></th>
          <th><?php echo "$key->Region"; ?></th>
          <th><?php echo "$key->LocalName"; ?></th>
          <th><?php echo "$key->LifeExpectancy"; ?></th>
          <th><?php echo "$key->HeadOfState"; ?></th>
        </tr>
-
       <?php endforeach; ?>
-        
         </table>
       </div>
 
   </div>
-
-<?php 
-$langues=languagesByCountry(2);
-var_dump($langues);
-?>
 
 </main>
 

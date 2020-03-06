@@ -40,18 +40,12 @@ $continents=getContinents();
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <a class="nav-link" href="gestion.php">Gestion</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-             aria-expanded="false">Dropdown</a>
+             aria-expanded="false">Continent</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
           <?php foreach($continents as $continent): ?>
             <?php echo"<a class=\"dropdown-item\" href=\"index.php?continent=$continent->Continent\">$continent->Continent</a>" ?>
@@ -60,12 +54,6 @@ $continents=getContinents();
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="register">Register</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link " href="todo-projet.php">
             ProjetPPE-SLAM
